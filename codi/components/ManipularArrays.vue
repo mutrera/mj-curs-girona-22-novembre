@@ -17,6 +17,10 @@
             <v-col cols="12" md="6" style="background-color:orange">
             Resultat:
             <br>
+            Mostres:{{tamanyArray}}
+            <br>
+            Mostres superiors a 50 graus:{{mesDe50}}
+            <br>
             <v-sparkline
                 :value="temperatures"
                 :gradient="['red', 'blue', 'yellow']">
@@ -31,11 +35,17 @@
 </template>
 <script>
 export default{
+    //mounted s'executa desprès de estar tot montat
+    mounted(){
+        //inicialitzem  l'array de temperatures
+        this.temperaturesAleatories()
+ 
+    },
     // data és un
     data(){
         return{
             temperatura:0,
-            temperatures:[33,24,41,23,44,11,23]
+            temperatures:[]
         }
     }, 
     //methods és un
@@ -61,14 +71,51 @@ export default{
         var nouArray=[]
         //repetim 100 vegades
         for(var i =0; i<100; i++){
-            //afegim valors
-            var valorAleatori = Math.random()*100
-            nouArray.push(valorAleatori)
+            //afegim valors()
+            var valorAleatoriDecimal= Math.random()*100
+            var valorAleatoriEnter =this.processarEnter(valorAleatoriDecimal)
+            //amb parseInt es retornara numeros sensers
+            // nouArray.push(parseInt(valorAleatori))
+            nouArray.push(valorAleatoriEnter)
         }
         //assignem al array del component
         this.temperatures = nouArray
        
+       },
+       //aquesta funcio no té assignat un botó
+       processarEnter(val){
+        return parseInt(val)
        }
+
+    },
+    computed:{
+        tamanyArray(){
+            return this.temperatures.length
+        }, 
+        mesDe50(){
+            var motresDeMesDe50Graus = 0
+            this.temperatures.forEach((temperatura)=>{
+                if(temperatura>50){
+                    motresDeMesDe50Graus++
+
+                }
+            })
+            return motresDeMesDe50Graus
+        }
+
+    },
+    //serveix per veure si hi ha coses que canvien
+    watch:{
+        temperatura(newValue, oldValue){
+            console.log(newValue, oldValue)
+        },
+        mesDe50(newValue,oldValue){
+            if(newValue>55){
+                alert("ALERTA")
+            }
+        }
+
+
 
     }
 }
