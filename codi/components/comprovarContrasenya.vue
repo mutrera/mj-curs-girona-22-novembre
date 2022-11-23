@@ -9,20 +9,22 @@
              </v-text-field>
              <v-text-field 
              label="Password"
-           
+             type="password"
              v-model="contrasenya">
              </v-text-field>
              <div v-if="hiHaMajusculesMinuscules" style="color:green"> Molt bé, tens majuscules i minuscules</div>
              <div v-else style="color:red"> Ep, cal posar alguna majuscules i minuscules</div>
              <div v-if="siHiHaMesDe6Caracters" style="color:green"> Molt bé, tens més de 6 caracters</div>
              <div v-else style="color:red"> Ep, cal posar com a mínim 6 caracters</div>
-             <div v-if="siHiHaCaractersEspecials" style="color:green"> Molt bé, tens algun caracter especial</div>
-             <div v-else style="color:red"> Ep, cal posar algun caracter especial</div>
+             <div v-if="siHiHaCaractersEspecials" style="color:green"> Molt bé, tens algun simbol d'exclamació</div>
+             <div v-else style="color:red"> Ep, cal posar algun simbol d'exclamació</div>
              <br>
-             <v-btn>Login</v-btn>
-            </v-col>
-            <v-col>
-             esquerra
+             <v-btn 
+             v-if="hiHaMajusculesMinuscules
+                   && siHiHaMesDe6Caracters
+                   && siHiHaCaractersEspecials" 
+             >Login</v-btn>
+             <v-btn v-if="totCorrecte">Netejar</v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -74,14 +76,36 @@ export default{
   && this.contrasenya.length>=6){
     return true
   }
-  //tornon false
+  //tornen false
+  return false
         },
         siHiHaCaractersEspecials(){
-            return false
+            let textOriginal = this.contrasenya
+            let hiHaSimbolExclamcio = false
+            //per cada lletra de la cadena de text 
+            
+            for(var i= 0; i< textOriginal.length; i++){
+                let caracter = textOriginal[i]
+                // mirem si la lletra es un simbol d´exclamacio
+               
+                if (caracter == "!"){
+             //si ho és, canviem la variable boleana  
+             hiHaSimbolExclamcio = true 
+                    
+                }
+        }
+        return hiHaSimbolExclamcio
+        },
+
+        totCorrecte(){
+        let compleixTotesLesCondicions = false
+        return this.siHiHaCaractersEspecials 
+        && this.siHiHaMesDe6Caracters 
+        && this.hiHaMajusculesMinuscules
 
         }
-    }
 
+    }
 }
 
 </script>
