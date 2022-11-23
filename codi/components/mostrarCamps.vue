@@ -1,5 +1,5 @@
 <template>
-    <div style="background-color:aquamarine ;">
+    <div style="background-color:aquamarine">
         <div style="font-size:40px">{{parametre1}}</div>
         <div style="font-size:40px">{{parametre2}}</div>
     </div>

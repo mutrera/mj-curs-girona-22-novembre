@@ -6,6 +6,7 @@
           <v-btn dark to="/">Inici</v-btn>
           <v-btn dark to="/tasques">Tasques</v-btn>
           <v-btn dark to="/textos">Textos</v-btn>
+          <v-btn dark to="/contrasenya">Entrar contrasenya</v-btn>
         </v-col>
       </v-row>
     </v-container>
